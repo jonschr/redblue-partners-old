@@ -44,6 +44,7 @@ function partners_archive_template( $archive_template ) {
      global $post;
 
      if ( is_post_type_archive ( 'partners' ) ) {
+
           $archive_template = dirname( __FILE__ ) . '/templates/archive-partners.php';
      }
      return $archive_template;
