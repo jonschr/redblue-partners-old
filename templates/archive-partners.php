@@ -101,7 +101,7 @@ function rbp_archive_output() {
 
 /**
  * This is the output if we have two or more categories
- * @param  array $terms
+ * @param array $terms
  */
 function rbp_category_output( $terms ) {
 	foreach ($terms as $term ) {
@@ -184,15 +184,43 @@ function rbp_article_content() {
 
 	$img = genesis_get_image( array( 'format' => 'html', 'size' => 'partner-image', 'attr' => array( 'class' => 'partner-image' ) ) );
 	$link = get_the_permalink();
-	printf( '%s', '<a href="' . $link . '">' . $img . '</a>' );
+	$target = 'target="_self"';
+
+	$url = get_post_meta( get_the_ID(), '_rbport_url', true );
+	if ( $url ) {
+		$link = $url;
+		$target = 'target="_blank"';
+	}
 	
+	//* If there's no content OR external URL, we don't want to have the image be linked at all
+	if ( get_the_content() || $url ) {
+		echo '<a href="' . $link . '" ' . $target . '>' . $img . '</a>';
+	} else {
+		echo $img;
+	}
+
 	?>
 	
 	<p class="partner-name">
-		<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-		<?php edit_post_link( 'Edit this partner', '<br/><small>', '</small>' ); ?>
+		
+		<?php 
+		//* If there's no content OR external URL, we don't want to have the title be linked at all
+		if ( get_the_content() || $url ) { 
+		?>
+		
+		<a <?php echo $target; ?> href="<?php echo $link ?>">
+			<?php the_title(); ?>
+		</a>
+
+		<?php 
+		} else { 
+			the_title();
+		} 
+
+		edit_post_link( 'Edit this partner', '<br/><small>', '</small>' ); ?>
 	</p>
-	<?php
+
+	<?php	
 }
 
 get_header();

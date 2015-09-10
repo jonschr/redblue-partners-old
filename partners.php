@@ -30,6 +30,9 @@ include_once( 'lib/admin.php' );
 //* Add a custom taxonomy
 include_once( 'lib/taxonomy.php' );
 
+//* Add metaboxes for this CPT
+include_once( 'lib/metabox/metabox.php' );
+
 //* Enqueue scripts and styles
 add_action( 'wp_enqueue_scripts', 'partners_add_scripts' );
 function partners_add_scripts() {
@@ -75,4 +78,4 @@ function rbp_redirect_partners_single_to_archive()
     wp_redirect( get_post_type_archive_link( 'partners' ), 301 );
     exit;
 }
-add_action( 'template_redirect', 'rbp_redirect_partners_single_to_archive' );
+// add_action( 'template_redirect', 'rbp_redirect_partners_single_to_archive' );
