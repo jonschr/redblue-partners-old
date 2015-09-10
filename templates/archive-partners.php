@@ -9,7 +9,6 @@ function rb_custom_loop() {
 
 	$taxonomies = array(
 		'partnercategories',
-		// 'my_tax',
 	);
 
 	$args = array(
@@ -36,7 +35,75 @@ function rb_custom_loop() {
 
 	$terms = get_terms( $taxonomies, $args );
 
+	$numberofterms = count( $terms );
 
+	//* If there's more than one term, then we'll display them by category
+	if ( $numberofterms > 1 ) {
+		rbp_category_output( $terms );
+
+	/**
+	 * If there's just one term or none, then we'll just display a grid with everything
+	 * No need to pass the term into here; we'll retrieve the archive description instead
+	 */
+	} else {
+		rbp_archive_output();
+	}
+
+	echo '</main>';
+
+}
+remove_action( 'genesis_loop', 'genesis_do_loop' );
+add_action( 'genesis_loop', 'rb_custom_loop' );
+
+/**
+ * This is the output if we just have zero or one partner categories
+ */
+function rbp_archive_output() {
+
+	//* Output the Genesis archive description
+	genesis_do_cpt_archive_title_description();
+	
+	//* Start the post counter at 0 each time we start a new term
+	$loopcounter = 0;    
+
+	echo '<div class="partner-container">';
+
+	while ( have_posts() ) {
+		the_post();
+		
+		$classes = array(
+			'one-fourth',
+		);
+
+		if ( 0 == $loopcounter || 0 == $loopcounter % 4 )
+			$classes[] = 'first';
+		
+		?>
+
+		<article <?php post_class( $classes ); ?>>
+			
+			<?php
+
+			//* Get the content (this is the same on category and archive views)
+			rbp_article_content();
+			
+			$loopcounter++; 
+			?>
+
+		</article>
+
+		<?php 
+		
+	}
+
+	echo '</div>';
+}
+
+/**
+ * This is the output if we have two or more categories
+ * @param  array $terms
+ */
+function rbp_category_output( $terms ) {
 	foreach ($terms as $term ) {
 
 		// start the post counter at 0 each time we start a new term
@@ -45,19 +112,25 @@ function rb_custom_loop() {
 	    // setup the cateogory ID
 	    $term_id = $term->term_id;
 	    
-		echo '<header class="entry-header">';
+		echo '<div class="archive-description cpt-archive-description">';
 
-	    // Make a header for the category
-	    echo "<h1 class='entry-title'>" . $term->name . "</h1>";
+			//* If there's a genesis headline set, we'll use that. Otherwise, use the name of the term
+			if ( $term->meta[ 'headline' ] ) {
+				$term_headline = $term->meta[ 'headline' ];
+				printf( '<h1 class="archive-title">%s</h1>', $term_headline );
+			} else {
+			    echo '<h1 class="archive-title">' . $term->name . '</h1>';
+			}
 
-	    $termdescription =  term_description( $term_id, 'partnercategories' );
-	    echo '<h4 class="subhead">' . $termdescription . '</h4>';
+			if ( $term->meta[ 'intro_text' ] ) {
+				$term_intro_text = $term->meta[ 'intro_text' ];
+				printf( '<p>%s</p>', $term_intro_text );
+			}
 
-	    echo '</header>';
+	    echo '</div>';
+
 
 	    echo '<div class="partner-container">';
-
-	    // global $current_post; // current paginated page
 		
 		$args = array(
 			'post_type' => 'partners',
@@ -84,30 +157,19 @@ function rb_custom_loop() {
 
 			if ( 0 == $loopcounter || 0 == $loopcounter % 4 )
 				$classes[] = 'first';
+			
 			?>
 
 			<article <?php post_class( $classes ); ?>>
 				<?php 
 
-				$img = genesis_get_image( array( 'format' => 'html', 'size' => 'partner-image', 'attr' => array( 'class' => 'partner-image' ) ) );
-				$link = get_the_permalink();
-				printf( '%s', '<a href="' . $link . '">' . $img . '</a>' );
-				
-				?>
-				
-				<p class="aligncenter partner-name">
-					<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-					<?php edit_post_link( 'Edit this partner', '<br/><small>', '</small>' ); ?>
-				</p>
-				
+				//* Get the content (this is the same on category and archive views)
+				rbp_article_content();
 
-				<?php
-				// add 1 to the count
 				$loopcounter++; 
 				?>
 
 			</article>
-		
 
 			<?php 
 			
@@ -115,19 +177,24 @@ function rb_custom_loop() {
 		echo '</div>'; // div.partner-container
 		echo '<div class="clear"></div>';
 	}	
-	
-	echo '</main>';
-
 }
 
-remove_action( 'genesis_loop', 'genesis_do_loop' );
-add_action( 'genesis_loop', 'rb_custom_loop' );
+function rbp_article_content() {
+	global $post;
 
+	$img = genesis_get_image( array( 'format' => 'html', 'size' => 'partner-image', 'attr' => array( 'class' => 'partner-image' ) ) );
+	$link = get_the_permalink();
+	printf( '%s', '<a href="' . $link . '">' . $img . '</a>' );
+	
+	?>
+	
+	<p class="partner-name">
+		<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+		<?php edit_post_link( 'Edit this partner', '<br/><small>', '</small>' ); ?>
+	</p>
+	<?php
+}
 
 get_header();
-
-
-
-genesis_loop();
-
+do_action( 'genesis_loop' );
 get_footer();
