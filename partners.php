@@ -42,15 +42,17 @@ function partners_add_scripts() {
 
 }
 
+//* Add the image size
+add_image_size( 'partner-image', 300, 200, true );
+
 //* Partners archive template
 function partners_archive_template( $archive_template ) {
-     global $post;
+    global $post;
 
-     if ( is_post_type_archive ( 'partners' ) ) {
-
-          $archive_template = dirname( __FILE__ ) . '/templates/archive-partners.php';
-     }
-     return $archive_template;
+    if ( is_post_type_archive ( 'partners' ) ) {
+        $archive_template = dirname( __FILE__ ) . '/templates/archive-partners.php';
+        return $archive_template;
+    }
 }
 add_filter( 'archive_template', 'partners_archive_template' ) ;
 
@@ -65,17 +67,18 @@ function partners_single_template( $single_template ) {
 }
 add_filter( 'single_template', 'partners_single_template' ) ;
 
-add_image_size( 'partner-image', 300, 200, true );
-
 /**
- * Add a redirect from the single template to the archive
+ * Set the posts per page to infinite on archives
+ * @param  array $query
+ * @return array
  */
-function rbp_redirect_partners_single_to_archive()
-{
-    if ( ! is_singular( 'partners' ) )
+function rbp_archive_size( $query ) {
+    if ( is_admin() || ! $query->is_main_query() )
         return;
 
-    wp_redirect( get_post_type_archive_link( 'partners' ), 301 );
-    exit;
+    if ( is_post_type_archive( 'partners' ) ) {
+        $query->set( 'posts_per_page', -1 );
+        return;
+    }
 }
-// add_action( 'template_redirect', 'rbp_redirect_partners_single_to_archive' );
+add_action( 'pre_get_posts', 'rbp_archive_size', 1 );
