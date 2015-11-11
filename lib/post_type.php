@@ -43,12 +43,12 @@ function rbc_register_post_types() {
 		'query_var' => true,
 		'rewrite' => true,
 		'capability_type' => 'post',
-		'rewrite' => array( 'slug' => 'partners' ),
+		// 'rewrite' => array( 'slug' => 'partners' ),
 		'has_archive' => true,
 		'hierarchical' => false,
 		'menu_position' => null,
 		'menu_icon' => 'dashicons-format-image',
-		'supports' => array( 'title', 'thumbnail', 'editor', 'wps_subtitle' )
+		'supports' => array( 'title', 'thumbnail', 'editor', 'genesis-cpt-archives-settings' )
 	);
 
 	register_post_type( 'partners', $args );
