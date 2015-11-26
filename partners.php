@@ -51,8 +51,8 @@ function partners_archive_template( $archive_template ) {
 
     if ( is_post_type_archive ( 'partners' ) ) {
         $archive_template = dirname( __FILE__ ) . '/templates/archive-partners.php';
-        return $archive_template;
     }
+    return $archive_template;
 }
 add_filter( 'archive_template', 'partners_archive_template' ) ;
 
