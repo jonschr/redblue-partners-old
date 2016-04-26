@@ -5,7 +5,7 @@ add_filter( 'genesis_pre_get_option_site_layout', '__genesis_return_full_width_c
 
 add_action( 'genesis_entry_content', 'rbp_add_featured_image', 0 );
 function rbp_add_featured_image() {
-	$img = genesis_get_image( array( 'format' => 'html', 'size' => 'partner-image', 'attr' => array( 'class' => 'alignright' ) ) );
+	$img = genesis_get_image( array( 'format' => 'html', 'size' => 'partner-image', 'attr' => array( 'class' => 'alignnone partner-image' ) ) );
 	printf( '%s', $img );
 }
 

@@ -14,22 +14,11 @@
 		text-align: center;
 	}
 
-	.partner-container {
-		margin-left: -150px;
-		margin-right: -150px;
-
-		@media( max-width: 1200px) {
-			margin-left: 0;
-			margin-right: 0;
-		}
-	}
-
 	.partner-name {
 		font-size: 18px;
 	}
 
 	.partner-image-single {
-		margin: -100px auto 40px;
 		width: 230px;
 		text-align: center;
 		display: block;
@@ -38,6 +27,8 @@
 	.partner-image {
 		margin-bottom: 10px;
 		transition: .25s all ease;
+		max-width: 100%;
+		height: auto !important;
 	}
 
 	.entry {
