@@ -1,47 +1,49 @@
-.post-type-archive-partners .site-inner {
-  padding-bottom: 50px; }
-.post-type-archive-partners .clear {
-  clear: both;
+.section-archive-partners .after-entry, .section-archive-partners .archive-description,
+.section-archive-partners .author-box {
+  background: transparent;
+  padding: 0; }
+.section-archive-partners .entry.type-partners {
+  padding: 0;
+  border: 10px solid white; }
+  @media (max-width: 860px) {
+    .section-archive-partners .entry.type-partners {
+      margin-bottom: 10px; } }
+.section-archive-partners .single-partner-container {
   width: 100%;
-  float: none; }
-.post-type-archive-partners .entry-title {
-  text-align: center; }
-@media (max-width: 1200px) {
-  .post-type-archive-partners .partner-container {
-    margin-left: 0;
-    margin-right: 0; } }
-.post-type-archive-partners .partner-name {
-  font-size: 18px; }
-.post-type-archive-partners .partner-image-single {
-  margin: -100px auto 40px;
-  width: 230px;
-  text-align: center;
-  display: block; }
-.post-type-archive-partners .partner-image {
-  margin-bottom: 0;
-  transition: .25s all ease;
-  max-width: 100%;
-  height: auto !important; }
-.post-type-archive-partners .entry {
-  margin-bottom: 30px;
-  padding: 0 10px;
-  text-align: center; }
-.post-type-archive-partners .entry:after {
-  display: none; }
-.post-type-archive-partners article.partners > a {
   display: block;
-  margin-bottom: 10px;
+  height: 125px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  position: relative;
   text-align: center; }
-  .post-type-archive-partners article.partners > a img {
-    margin-bottom: 0; }
-    @media (max-width: 767px) {
-      .post-type-archive-partners article.partners > a img {
-        margin: 10px auto; } }
-  @media (max-width: 1023px) {
-    .post-type-archive-partners article.partners > a br {
-      display: none; } }
-@media (max-width: 1023px) {
-  .post-type-archive-partners .entry-header {
-    margin-bottom: 10px; } }
+  .section-archive-partners .single-partner-container span.title {
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    text-align: center;
+    padding: 0 25px;
+    line-height: 1.2em;
+    width: 100%; }
+  .section-archive-partners .single-partner-container.no-image span.title {
+    display: block; }
+  .section-archive-partners .single-partner-container .popover-link {
+    position: absolute;
+    display: block;
+    width: 100%;
+    top: 50%;
+    left: 0;
+    text-align: center;
+    transform: translateY(50%);
+    text-align: center;
+    padding: 0;
+    line-height: 1.2em;
+    opacity: 0.01;
+    transition: .3s transform ease, .3s opacity ease; }
+.section-archive-partners .single-partner-container:hover .popover-link {
+  transform: translateY(-50%);
+  opacity: 1; }
 
 /*# sourceMappingURL=partners-style.css.map */

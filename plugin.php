@@ -19,7 +19,7 @@
 */
 
 // Plugin directory 
-define( 'RBP_DIR', dirname( __FILE__ ) );
+define( 'REDBLUE_PARTERNS_DIR', dirname( __FILE__ ) );
 
 //* Register the post type
 include_once( 'lib/post_type.php' );
@@ -34,7 +34,7 @@ include_once( 'lib/taxonomy.php' );
 include_once( 'lib/metabox/metabox.php' );
 
 //* Load the appropriate templates
-include_once( 'lib/metabox/metabox.php' );
+include_once( 'lib/template_loader.php' );
 
 //* Enqueue scripts and styles
 add_action( 'wp_enqueue_scripts', 'partners_add_scripts' );
@@ -68,7 +68,7 @@ function partners_archive_template( $archive_template ) {
     }
     return $archive_template;
 }
-add_filter( 'archive_template', 'partners_archive_template' ) ;
+// add_filter( 'archive_template', 'partners_archive_template' ) ;
 
 //* Partners archive template
 function partners_single_template( $single_template ) {
@@ -79,7 +79,7 @@ function partners_single_template( $single_template ) {
      }
      return $single_template;
 }
-add_filter( 'single_template', 'partners_single_template' ) ;
+// add_filter( 'single_template', 'partners_single_template' ) ;
 
 /**
  * Set the posts per page to infinite on archives
