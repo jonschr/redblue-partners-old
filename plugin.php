@@ -19,7 +19,7 @@
 */
 
 // Plugin directory 
-define( 'REDBLUE_PARTERNS_DIR', dirname( __FILE__ ) );
+define( 'REDBLUE_PARTNERS_DIR', dirname( __FILE__ ) );
 
 //* Register the post type
 include_once( 'lib/post_type.php' );

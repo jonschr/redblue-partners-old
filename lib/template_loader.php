@@ -35,7 +35,7 @@ function redblue_partners_template_chooser( $template ) {
         // echo 'Theme template method 1: ' . $template_in_theme . '</br>';
 
         //* Get the filename of the location in the plugin where our default template lives
-        $template_in_plugin = REDBLUE_PARTERNS_DIR . '/templates/' . redblue_partners_return_section() . '.php';
+        $template_in_plugin = REDBLUE_PARTNERS_DIR . '/templates/' . redblue_partners_return_section() . '.php';
         
 		//* Echo this for testing purposes
         // echo 'Plugin template: ' . $template_in_plugin . '</br>';
