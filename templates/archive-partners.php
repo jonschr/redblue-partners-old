@@ -183,6 +183,10 @@ function rbp_article_content() {
 	global $post;
 
 	$img = genesis_get_image( array( 'format' => 'html', 'size' => 'partner-image', 'attr' => array( 'class' => 'partner-image' ) ) );
+	if ( !$img ) {
+		$img = '<span class="partner-title">' . get_the_title() . '</span>';
+	}
+
 	$link = get_the_permalink();
 	$target = 'target="_self"';
 

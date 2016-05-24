@@ -6,13 +6,10 @@
   float: none; }
 .post-type-archive-partners .entry-title {
   text-align: center; }
-.post-type-archive-partners .partner-container {
-  margin-left: -150px;
-  margin-right: -150px; }
-  @media (max-width: 1200px) {
-    .post-type-archive-partners .partner-container {
-      margin-left: 0;
-      margin-right: 0; } }
+@media (max-width: 1200px) {
+  .post-type-archive-partners .partner-container {
+    margin-left: 0;
+    margin-right: 0; } }
 .post-type-archive-partners .partner-name {
   font-size: 18px; }
 .post-type-archive-partners .partner-image-single {
@@ -21,11 +18,13 @@
   text-align: center;
   display: block; }
 .post-type-archive-partners .partner-image {
-  margin-bottom: 10px;
-  transition: .25s all ease; }
+  margin-bottom: 0;
+  transition: .25s all ease;
+  max-width: 100%;
+  height: auto !important; }
 .post-type-archive-partners .entry {
   margin-bottom: 30px;
-  padding: 0;
+  padding: 0 10px;
   text-align: center; }
 .post-type-archive-partners .entry:after {
   display: none; }

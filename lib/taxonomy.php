@@ -23,7 +23,7 @@ function rb_register_partner_category_taxonomy() {
 			'show_ui' => true,
 			'show_admin_column' => true,
 			'query_var' => true,
-			// 'rewrite' => array( 'slug' => 'relationship' ),
+			'rewrite' => array( 'slug' => 'supporters' ),
 		)
 	);
 }

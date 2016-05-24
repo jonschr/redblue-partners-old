@@ -33,6 +33,9 @@ include_once( 'lib/taxonomy.php' );
 //* Add metaboxes for this CPT
 include_once( 'lib/metabox/metabox.php' );
 
+//* Load the appropriate templates
+include_once( 'lib/metabox/metabox.php' );
+
 //* Enqueue scripts and styles
 add_action( 'wp_enqueue_scripts', 'partners_add_scripts' );
 function partners_add_scripts() {
@@ -42,8 +45,19 @@ function partners_add_scripts() {
 
 }
 
-//* Add the image size
-add_image_size( 'partner-image', 300, 200, true );
+/**
+ * Adds new partner image size if not already set in child theme
+ */
+add_action( 'after_setup_theme', 'redblue_partners_after_setup_theme' );
+function redblue_partners_after_setup_theme(){
+
+    global $_wp_additional_image_sizes;
+
+    if ( ! isset( $_wp_additional_image_sizes['partner-image'] ) ) {
+        add_image_size( 'partner-image', 300, 200, TRUE );
+    }
+
+}
 
 //* Partners archive template
 function partners_archive_template( $archive_template ) {
