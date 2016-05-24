@@ -54,7 +54,7 @@ function redblue_partners_after_setup_theme(){
     global $_wp_additional_image_sizes;
 
     if ( ! isset( $_wp_additional_image_sizes['partner-image'] ) ) {
-        add_image_size( 'partner-image', 300, 200, TRUE );
+        add_image_size( 'partner-image', 300, 200, false );
     }
 
 }
