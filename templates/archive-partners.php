@@ -1,9 +1,12 @@
 <?php
 
+# Force full width content
+add_filter( 'genesis_pre_get_option_site_layout', '__genesis_return_full_width_content' );
+
 /**
  * Use custom content for the loop
  */
-function rb_custom_loop() {
+function redblue_partners_custom_loop() {
 
 	echo '<main class="content">';
 
@@ -46,19 +49,19 @@ function rb_custom_loop() {
 	 * No need to pass the term into here; we'll retrieve the archive description instead
 	 */
 	} else {
-		rbp_archive_output();
+		redblue_partners_archive_output();
 	}
 
 	echo '</main>';
 
 }
 remove_action( 'genesis_loop', 'genesis_do_loop' );
-add_action( 'genesis_loop', 'rb_custom_loop' );
+add_action( 'genesis_loop', 'redblue_partners_custom_loop' );
 
 /**
  * This is the output if we just have zero or one partner categories
  */
-function rbp_archive_output() {
+function redblue_partners_archive_output() {
 
 	//* Output the Genesis archive description
 	genesis_do_cpt_archive_title_description();
@@ -85,7 +88,7 @@ function rbp_archive_output() {
 			<?php
 
 			//* Get the content (this is the same on category and archive views)
-			rbp_article_content();
+			redblue_partners_article_content();
 			
 			$loopcounter++; 
 			?>
@@ -124,7 +127,7 @@ function rbp_category_output( $terms ) {
 
 			if ( $term->meta[ 'intro_text' ] ) {
 				$term_intro_text = $term->meta[ 'intro_text' ];
-				printf( '<p>%s</p>', $term_intro_text );
+				printf( '<p class="archive-description">%s</p>', $term_intro_text );
 			}
 
 	    echo '</div>';
@@ -164,7 +167,7 @@ function rbp_category_output( $terms ) {
 				<?php 
 
 				//* Get the content (this is the same on category and archive views)
-				rbp_article_content();
+				redblue_partners_article_content();
 
 				$loopcounter++; 
 				?>
@@ -179,7 +182,7 @@ function rbp_category_output( $terms ) {
 	}	
 }
 
-function rbp_article_content() {
+function redblue_partners_article_content_old() {
 	global $post;
 
 	$img = genesis_get_image( array( 'format' => 'html', 'size' => 'partner-image', 'attr' => array( 'class' => 'partner-image' ) ) );
@@ -225,6 +228,45 @@ function rbp_article_content() {
 	</p>
 
 	<?php	
+}
+
+function redblue_partners_article_content() {
+	
+	global $post;
+	
+	$title = get_the_title();
+	$content = get_the_content();
+	$permalink = '';
+	$class = '';
+
+	//* Only get the permalink if there is, in fact, some content
+	if ( $content ) {
+		$permalink = get_the_permalink();
+		$target = '_self';
+	}
+	
+	//* Let's get the url, if there's one set, and in that case we want that to be the permalink
+	$url = get_post_meta( get_the_ID(), '_rbport_url', true );
+	if ( $url ) {
+
+		$permalink = $url;
+		$target = '_blank';
+	}
+
+	$imagearray = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'partner-image' );
+	$img_url = $imagearray[0];
+
+	//* Set the class based on whether there's a background image or not
+	$class = ( $img_url ) ? 'has-image' : 'no-image';
+
+	if ( $permalink) {
+		printf( '<div class="single-partner-container %s" style=background-image:url(%s);"><span class="title">%s</span><span class="popover-link"><a class="button button-small" href="%s" target="%s">More information</a></span></div>', $class, $img_url, $title, $permalink, $target );
+	} else {
+		printf( '<div class="single-partner-container %s" style=background-image:url(%s);"><span class="title">%s</span></div>', $class, $img_url, $title );
+	}
+
+	if ( current_user_can( 'edit_posts' ) )
+		edit_post_link( 'Edit partner', '<small style="display: block; text-align:center;">', '</small>' );
 }
 
 get_header();

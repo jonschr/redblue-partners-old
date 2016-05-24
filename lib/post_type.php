@@ -17,7 +17,7 @@
  * @link http://codex.wordpress.org/Function_Reference/register_post_type
  */
 
-function rbc_register_post_types() {
+function redblue_partners_register_post_types() {
 
 	$labels = array(
 		'name' => 'Partners',
@@ -41,9 +41,8 @@ function rbc_register_post_types() {
 		'show_ui' => true,
 		'show_in_menu' => true,
 		'query_var' => true,
-		'rewrite' => true,
 		'capability_type' => 'post',
-		// 'rewrite' => array( 'slug' => 'partners' ),
+		'rewrite' => array( 'slug' => 'partners' ),
 		'has_archive' => true,
 		'hierarchical' => false,
 		'menu_position' => null,
@@ -53,4 +52,4 @@ function rbc_register_post_types() {
 
 	register_post_type( 'partners', $args );
 }
-add_action( 'init', 'rbc_register_post_types' );
+add_action( 'init', 'redblue_partners_register_post_types' );
